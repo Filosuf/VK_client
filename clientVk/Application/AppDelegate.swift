@@ -1,6 +1,6 @@
 //
 //  AppDelegate.swift
-//  VK_client
+//  ClientVk
 //
 //  Created by Filosuf on 22.03.2023.
 //

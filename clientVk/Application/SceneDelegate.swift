@@ -1,6 +1,6 @@
 //
 //  SceneDelegate.swift
-//  VK_client
+//  ClientVk
 //
 //  Created by Filosuf on 22.03.2023.
 //
@@ -16,7 +16,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
 
         window = UIWindow(windowScene: windowScene)
-        window?.rootViewController = ViewController()
+        let rootVC = UINavigationController(rootViewController: ViewController())
+        window?.rootViewController = rootVC
         window?.makeKeyAndVisible()
     }
 
