@@ -1,0 +1,17 @@
+/* 
+  Localizable.strings
+  ClientVk
+
+  Created by Filosuf on 15.04.2023.
+  
+*/
+// MARK: - Auth flow
+// MARK: - AuthViewController
+enter = "Войти";
+
+// MARK: - Main TabBar
+profile = "Profile";
+contacts = "Contacts";
+// MARK: - Profile flow
+// MARK: - ProfileViewController
+logout = "Выход";

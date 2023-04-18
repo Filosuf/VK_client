@@ -46,7 +46,7 @@ final class ProfileViewController: UIViewController, ProfileViewControllerProtoc
 
     private lazy var logOutButton: UIButton = {
         var config = UIButton.Configuration.bordered()
-        config.title = "Log Out"
+        config.title = "logout".localized
         let button = UIButton(configuration: config, primaryAction: UIAction(handler: { [unowned self] _ in
             presenter.logout()
         }))
@@ -67,7 +67,7 @@ final class ProfileViewController: UIViewController, ProfileViewControllerProtoc
     // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .systemBlue
+        view.backgroundColor = .systemBackground
         layout()
         presenter.viewDidLoad()
         
@@ -84,7 +84,6 @@ final class ProfileViewController: UIViewController, ProfileViewControllerProtoc
     }
 
     private func layout() {
-        view.backgroundColor = .systemBackground
         [profileImage, nameLabel, cityLabel, phoneLabel,logOutButton].forEach { view in
             view.translatesAutoresizingMaskIntoConstraints = false
             self.view.addSubview(view)
