@@ -25,6 +25,7 @@ final class ViewControllersFactory {
         let presenter = WebViewPresenter(coordinator: authFlowCoordinator, helper: authHelper, tokenStorage: tokenStorage)
         presenter.delegate = delegate
         let viewController = WebViewController(presenter: presenter)
+        presenter.view = viewController
         return viewController
     }
 

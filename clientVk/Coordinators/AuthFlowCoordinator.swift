@@ -27,9 +27,7 @@ final class AuthFlowCoordinator {
     }
 
     func switchToTabBarController() {
-        // Получаем экземпляр `Window` приложения
         guard let window = UIApplication.shared.currentUIWindow() else { assertionFailure("Invalid Configuration"); return }
-//        guard let window = UIApplication.shared.windows.first else { assertionFailure("Invalid Configuration"); return }
         window.rootViewController = controllersFactory.makeTabBarController()
     }
 

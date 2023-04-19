@@ -49,7 +49,7 @@ final class ProfileViewPresenter: ProfileViewPresenterProtocol {
     func logout() {
         tokenStorage.removeToken()
         cleanCookie()
-        switchToSplashController()
+        coordinator.switchToAuthController()
     }
 
     // MARK: - Private methods
@@ -64,13 +64,4 @@ final class ProfileViewPresenter: ProfileViewPresenterProtocol {
             }
         }
     }
-
-    private func switchToSplashController() {
-//        guard let window = UIApplication.shared.windows.first else { fatalError("Invalid Configuration") }
-//        let splashController = UIStoryboard(name: "Main", bundle: .main)
-//            .instantiateViewController(withIdentifier: "SplashViewController")
-//        window.rootViewController = splashController
-        coordinator.showWebViewController()
-    }
-
 }

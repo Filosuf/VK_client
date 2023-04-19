@@ -39,18 +39,14 @@ final class AuthHelper: AuthHelperProtocol {
     }
 
     func code(from url: URL) -> ApiToken? {
-        print(url)
         if let urlComponents = URLComponents(string: url.absoluteString) {
-            let path = urlComponents.path
-            print(path)
             if urlComponents.path == "/blank.html" {
                 var components = URLComponents()
                 components.query = url.fragment
 
                 guard let queryItems = components.queryItems,
                       let code = queryItems.first(where: { $0.name == "access_token" })?.value,
-                      let expiresIn = queryItems.first(where: { $0.name == "expires_in" })?.value,
-                      let userID = queryItems.first(where: { $0.name == "user_id" })?.value else { return nil }
+                      let expiresIn = queryItems.first(where: { $0.name == "expires_in" })?.value else { return nil }
                 return ApiToken(accessToken: code, expiresIn: Int(expiresIn) ?? 0)
             }
         }

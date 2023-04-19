@@ -42,8 +42,7 @@ extension URLSession {
     }
 
     private func decoding<T: Decodable>(data: Data) -> Result<T, Error>{
-        let convertedString = String(data: data, encoding: String.Encoding.utf8)
-        print(convertedString)
+//        let convertedString = String(data: data, encoding: String.Encoding.utf8)
         do {
             let decoder = JSONDecoder()
             let responseBody = try decoder.decode(T.self, from: data)

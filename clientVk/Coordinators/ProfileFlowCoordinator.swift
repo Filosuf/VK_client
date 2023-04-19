@@ -21,6 +21,11 @@ final class ProfileFlowCoordinator {
 
     // MARK: - Methods
 
+    func switchToAuthController() {
+        guard let window = UIApplication.shared.currentUIWindow() else { assertionFailure("Invalid Configuration"); return }
+        window.rootViewController = controllersFactory.makeAuthViewController()
+    }
+
     func showWebViewController() {
         let vc = controllersFactory.makeWebViewController()
         navCon.present(vc, animated: true)

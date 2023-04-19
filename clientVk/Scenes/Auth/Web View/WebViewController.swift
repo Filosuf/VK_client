@@ -7,16 +7,20 @@
 
 import UIKit
 import WebKit
-protocol WebViewControllerDelegate: AnyObject {
-    func didAuthenticate(with token: ApiToken)
+
+
+protocol WebViewControllerProtocol: AnyObject {
+    func load(request: URLRequest)
+    func setProgressValue(_ newValue: Float)
+    func setProgressHidden(_ isHidden: Bool)
 }
 
-final class WebViewController: UIViewController {
+final class WebViewController: UIViewController, WebViewControllerProtocol {
+
     // MARK: - Properties
     private let presenter: WebViewPresenterProtocol
-
-    let helper = AuthHelper()
-    let tokenStorage: TokenStorageProtocol = TokenStorage()
+    private var progressView = UIProgressView()
+    private var estimatedProgressObservation: NSKeyValueObservation?
 
     private lazy var webView: WKWebView = {
         let webView = WKWebView()
@@ -33,16 +37,57 @@ final class WebViewController: UIViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        view = webView
-        let helper = AuthHelper()
-        let request = helper.authRequest()
+        presenter.viewDidLoad()
+        layout()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+            super.viewWillAppear(animated)
+            estimatedProgressObservation = webView.observe(
+                \.estimatedProgress,
+                 options: [],
+                 changeHandler: { [weak self] _, _ in
+                     guard let self = self else { return }
+                     self.presenter.didUpdateProgressValue(self.webView.estimatedProgress)
+                 })
+        }
+
+
+    // MARK: - Methods
+    func load(request: URLRequest) {
         webView.load(request)
     }
-    // MARK: - Methods
+
+    func setProgressValue(_ newValue: Float) {
+        progressView.progress = newValue
+    }
+
+    func setProgressHidden(_ isHidden: Bool) {
+        progressView.isHidden = isHidden
+    }
+
+    private func layout() {
+        view.backgroundColor = .systemBackground
+        [progressView, webView].forEach { view in
+            view.translatesAutoresizingMaskIntoConstraints = false
+            self.view.addSubview(view)
+        }
+
+        NSLayoutConstraint.activate([
+            progressView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            progressView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            progressView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+
+            webView.topAnchor.constraint(equalTo: progressView.bottomAnchor),
+            webView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            webView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            webView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+        ])
+    }
 }
 
 // MARK: - WKNavigationDelegate
