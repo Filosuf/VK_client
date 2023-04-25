@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import ContactsUI
 
 final class ContactsFlowCoordinator {
     // MARK: - Properties
@@ -25,7 +26,7 @@ final class ContactsFlowCoordinator {
     }
 
     func showContactDetailViewController(coordinator: ContactsFlowCoordinator, friend: Profile?, contact: Contact?) {
-            let vc = controllersFactory.makeContactDetailsController(coordinator: coordinator, friend: friend, contact: contact)
-            navCon.pushViewController(vc, animated: true)
-        }
+        let vc = controllersFactory.makeContactDetailsController(coordinator: coordinator, friend: friend, contact: contact)
+        navCon.pushViewController(vc, animated: true)
+    }
 }

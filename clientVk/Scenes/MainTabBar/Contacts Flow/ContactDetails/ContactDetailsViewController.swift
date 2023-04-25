@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import ContactsUI
 
 protocol ContactsDetailsViewControllerProtocol: AnyObject {
     func setupView(iPhone: Contact?, vkontakte: Profile?)
@@ -45,10 +46,19 @@ final class ContactDetailsViewController: UIViewController, ContactsDetailsViewC
 
     private let updatePhotoButton: UIButton = {
         let button = UIButton()
-        button.setBackgroundImage(UIImage(systemName: "plus"), for: .normal)
+        button.setBackgroundImage(UIImage(systemName: "theatermasks.circle"), for: .normal)
         button.tintColor = .label
         button.clipsToBounds = true
         button.addTarget(self, action: #selector(updatePhotoButtonHandle), for: .touchUpInside)
+        return button
+    }()
+
+    private let addContactButton: UIButton = {
+        let button = UIButton()
+        button.setBackgroundImage(UIImage(systemName: "plus"), for: .normal)
+        button.tintColor = .label
+        button.clipsToBounds = true
+        button.addTarget(self, action: #selector(addContactButtonHandle), for: .touchUpInside)
         return button
     }()
 
@@ -71,7 +81,6 @@ final class ContactDetailsViewController: UIViewController, ContactsDetailsViewC
     }
 
     // MARK: - Methods
-
     func setupView(iPhone: Contact?, vkontakte: Profile?) {
         photoInContacts.image = UIImage(named: "noPhoto")
         nameInContacts.text = ""
@@ -93,9 +102,15 @@ final class ContactDetailsViewController: UIViewController, ContactsDetailsViewC
         presenter.updatePhoto()
     }
 
+    @objc private func addContactButtonHandle() {
+        let contactPicker = CNContactPickerViewController()
+        contactPicker.delegate = self
+        present(contactPicker, animated: true)
+    }
+
     private func layout() {
         let basicSpaceInterval: CGFloat = 12
-        [photoInContacts, nameInContacts, nameInVkontakte, photoInVkontakte, updatePhotoButton].forEach { view in
+        [photoInContacts, nameInContacts, nameInVkontakte, photoInVkontakte, updatePhotoButton, addContactButton].forEach { view in
             view.translatesAutoresizingMaskIntoConstraints = false
             self.view.addSubview(view)
         }
@@ -108,7 +123,7 @@ final class ContactDetailsViewController: UIViewController, ContactsDetailsViewC
 
             nameInContacts.leadingAnchor.constraint(equalTo: photoInContacts.trailingAnchor, constant: basicSpaceInterval),
             nameInContacts.trailingAnchor.constraint(equalTo: photoInVkontakte.leadingAnchor, constant: basicSpaceInterval),
-            nameInContacts.topAnchor.constraint(equalTo: view.topAnchor, constant: basicSpaceInterval),
+            nameInContacts.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: basicSpaceInterval),
 
             nameInVkontakte.leadingAnchor.constraint(equalTo: photoInContacts.trailingAnchor, constant: basicSpaceInterval),
             nameInVkontakte.trailingAnchor.constraint(equalTo: photoInVkontakte.leadingAnchor, constant: basicSpaceInterval),
@@ -124,7 +139,19 @@ final class ContactDetailsViewController: UIViewController, ContactsDetailsViewC
             updatePhotoButton.widthAnchor.constraint(equalToConstant: 32),
             updatePhotoButton.heightAnchor.constraint(equalToConstant: 32),
 
+            addContactButton.topAnchor.constraint(equalTo: updatePhotoButton.bottomAnchor, constant: basicSpaceInterval),
+            addContactButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -basicSpaceInterval),
+            addContactButton.widthAnchor.constraint(equalToConstant: 32),
+            addContactButton.heightAnchor.constraint(equalToConstant: 32),
+
         ])
     }
 }
+
+extension ContactDetailsViewController: CNContactPickerDelegate {
+    func contactPicker(_ picker: CNContactPickerViewController, didSelect contact: CNContact) {
+        let contactSelected = Contact(contact: contact)
+        presenter.didSelectContact(contactSelected)
+    }
+  }
 

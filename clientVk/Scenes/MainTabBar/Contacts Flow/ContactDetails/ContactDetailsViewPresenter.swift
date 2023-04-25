@@ -8,7 +8,9 @@
 import Foundation
 
 protocol ContactsDetailsViewPresenterProtocol: AnyObject {
+    func viewDidLoad()
     func updatePhoto()
+    func didSelectContact(_ contact: Contact)
 }
 
 final class ContactsDetailsViewPresenter: ContactsDetailsViewPresenterProtocol {
@@ -31,10 +33,9 @@ final class ContactsDetailsViewPresenter: ContactsDetailsViewPresenterProtocol {
 
     // MARK: - Methods
     func viewDidLoad() {
-        view?.setupView(iPhone: contact, vkontakte: friend)
+        setupView()
     }
 
-    // MARK: - Private methods
     func updatePhoto() {
         guard let contact = contact, let friend = friend else { return }
         if let photoUrl = URL(string: friend.photoUrl) {
@@ -46,8 +47,20 @@ final class ContactsDetailsViewPresenter: ContactsDetailsViewPresenterProtocol {
                                              mobilePhone: contact.mobilePhone
                 )
                 self?.contactsService.updateContact(updatedContact)
+                self?.contact = updatedContact
+                self?.setupView()
             }
         }
+    }
+
+    func didSelectContact(_ contact: Contact) {
+        self.contact = contact
+        setupView()
+    }
+
+    // MARK: - Private methods
+    private func setupView() {
+        view?.setupView(iPhone: contact, vkontakte: friend)
     }
 
     private func load(url: URL, completion: @escaping (Data) -> Void) {

@@ -10,7 +10,7 @@ import Foundation
 protocol ContactsViewPresenterProtocol: AnyObject {
     var friends: [Profile] { get }
     var contacts: [Contact] { get }
-    func viewDidLoad()
+    func viewWillAppear()
     func fetchContact(index: IndexPath) -> Contact?
     func didSelectRow(index: IndexPath)
 }
@@ -36,7 +36,7 @@ final class ContactsViewPresenter: ContactsViewPresenterProtocol {
     }
 
     // MARK: - Methods
-    func viewDidLoad() {
+    func viewWillAppear() {
         checkingToken()
         contacts = contactsService.getPhoneContacts()
     }

@@ -41,7 +41,11 @@ final class ContactsViewController: UIViewController, ContactsViewControllerProt
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         layout()
-        presenter.viewDidLoad()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        presenter.viewWillAppear()
+        contactsTableView.reloadData()
     }
 
     // MARK: - Methods
@@ -73,10 +77,6 @@ extension ContactsViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: ContactsTableViewCell.identifier, for: indexPath) as! ContactsTableViewCell
-
-//        cell.buttonAction = { [weak self] isOn in
-//            self?.viewModel.updateSchedule(cell: indexPath, status: isOn)
-//        }
         let profileVkontakte = presenter.friends[indexPath.row]
         let matchedContact = presenter.fetchContact(index: indexPath)
         cell.setupCell(iPhone: matchedContact, vkontakte: profileVkontakte)
