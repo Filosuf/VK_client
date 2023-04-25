@@ -23,9 +23,9 @@ enum TabBarPage: CaseIterable {
     var image: UIImage? {
         switch self {
         case .profile:
-            return UIImage(systemName: "record.circle.fill")
+            return UIImage(systemName: "person.fill")
         case .contacts:
-            return UIImage(systemName: "hare.fill")
+            return UIImage(systemName: "person.2")
         }
     }
 }

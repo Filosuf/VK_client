@@ -16,7 +16,7 @@ struct Profile {
     let mobilePhone: String?
     var fullName: String { "\(firstName) \(lastName)" }
 
-    init(profile: ProfileResult) {
+    init(profile: ProfileCodable) {
         id = profile.id
         firstName = profile.firstName
         lastName = profile.lastName

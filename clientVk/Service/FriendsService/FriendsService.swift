@@ -1,22 +1,22 @@
 //
-//  ProfileService.swift
+//  FriendsService.swift
 //  ClientVk
 //
-//  Created by Filosuf on 09.04.2023.
+//  Created by Filosuf on 19.04.2023.
 //
 
 import Foundation
 
-protocol ProfileServiceProtocol {
+protocol FriendsServiceProtocol {
     func fetchProfile(_ token: String, completion: @escaping (Result<[ProfileCodable], Error>) -> Void)
 }
 
-final class ProfileService: ProfileServiceProtocol {
+final class FriendsService: FriendsServiceProtocol {
 
     // MARK: - Properties
     private var task: URLSessionTask?
     private var lastToken: String?
-    private let profileHelper = ProfileHelper()
+    private let helper = FriendsHelper()
 
     // MARK: - Methods
     func fetchProfile(_ token: String, completion: @escaping (Result<[ProfileCodable], Error>) -> Void) {
@@ -24,13 +24,13 @@ final class ProfileService: ProfileServiceProtocol {
         if lastToken == token { return }
         task?.cancel()
         lastToken = token
-        let request = profileHelper.request(with: token, user_id: nil)
+        let request = helper.request(with: token, user_id: nil)
 
-        let task = URLSession.shared.objectTask(for: request) { [weak self] (result: Result<ApiProfile, Error>) in
+        let task = URLSession.shared.objectTask(for: request) { [weak self] (result: Result<ApiFriends, Error>) in
             switch result {
             case .success(let model):
                 // Возвращаем данные
-                let profiles = model.response
+                let profiles = model.response.items
                 DispatchQueue.main.async {
                     completion(.success(profiles))
                 }

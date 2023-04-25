@@ -70,7 +70,6 @@ final class ProfileViewController: UIViewController, ProfileViewControllerProtoc
         view.backgroundColor = .systemBackground
         layout()
         presenter.viewDidLoad()
-        
     }
 
     // MARK: - Methods

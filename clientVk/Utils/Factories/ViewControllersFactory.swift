@@ -14,6 +14,7 @@ final class ViewControllersFactory {
     private let authNavigationController = UINavigationController()
     private lazy var authFlowCoordinator = AuthFlowCoordinator(navCon: authNavigationController, controllersFactory: self)
     private let authHelper = AuthHelper()
+    let contactsService = ContactsService()
 
     // MARK: - Initialiser
     init(tokenStorage: TokenStorageProtocol) {
@@ -34,6 +35,13 @@ final class ViewControllersFactory {
         let viewController = AuthViewController(presenter: presenter)
         authNavigationController.pushViewController(viewController, animated: true)
         return authNavigationController
+    }
+
+    func makeContactDetailsController(coordinator: ContactsFlowCoordinator, friend: Profile?, contact: Contact?) -> ContactDetailsViewController {
+        let presenter = ContactsDetailsViewPresenter(coordinator: coordinator,contactService: contactsService, friend: friend, contact: contact)
+        let contactDetailsVC = ContactDetailsViewController(presenter: presenter)
+        presenter.view = contactDetailsVC
+        return contactDetailsVC
     }
 
     func makeTabBarController() -> UIViewController {
@@ -59,11 +67,13 @@ final class ViewControllersFactory {
             presenter.view = profileVC
             navigationVC.pushViewController(profileVC, animated: true)
         case .contacts:
-//            let statsVC = controllersFactory.makeStatsViewController()
-//            navigationVC.navigationBar.prefersLargeTitles = true
-            let contactsVC = UIViewController()
-            contactsVC.view.backgroundColor = .systemBlue
+            let coordinator = ContactsFlowCoordinator(navCon: navigationVC, controllersFactory: self)
+            let friendsService = FriendsService()
+            let presenter = ContactsViewPresenter(coordinator: coordinator, friendsService: friendsService, contactsService: contactsService, tokenStorage: tokenStorage)
+            let contactsVC = ContactsViewController(presenter: presenter)
+            presenter.view = contactsVC
             navigationVC.pushViewController(contactsVC, animated: true)
+            return navigationVC
         }
 
         return navigationVC
