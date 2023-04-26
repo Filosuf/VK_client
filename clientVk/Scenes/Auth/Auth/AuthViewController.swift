@@ -7,13 +7,8 @@
 
 import UIKit
 
-protocol AuthViewControllerDelegate: AnyObject {
-    func authViewController(_ vc: AuthViewController, didAuthenticateWithCode code: String)
-}
-
 final class AuthViewController: UIViewController {
     // MARK: - Properties
-    weak var delegate: AuthViewControllerDelegate?
     private let presenter: AuthViewPresenterProtocol
     
     private let loginButton: UIButton = {
@@ -46,7 +41,6 @@ final class AuthViewController: UIViewController {
     // MARK: - Methods
     @objc private func login() {
         presenter.loginHandle()
-//        navigationController?.pushViewController(WebViewController(), animated: true)
     }
 
     private func layout() {

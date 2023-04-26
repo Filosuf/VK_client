@@ -38,7 +38,7 @@ final class ViewControllersFactory {
     }
 
     func makeContactDetailsController(coordinator: ContactsFlowCoordinator, friend: Profile?, contact: Contact?) -> ContactDetailsViewController {
-        let presenter = ContactsDetailsViewPresenter(coordinator: coordinator,contactService: contactsService, friend: friend, contact: contact)
+        let presenter = ContactDetailsViewPresenter(coordinator: coordinator,contactService: contactsService, friend: friend, contact: contact)
         let contactDetailsVC = ContactDetailsViewController(presenter: presenter)
         presenter.view = contactDetailsVC
         return contactDetailsVC

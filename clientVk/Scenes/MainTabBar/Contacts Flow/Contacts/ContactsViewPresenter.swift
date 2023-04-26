@@ -25,7 +25,11 @@ final class ContactsViewPresenter: ContactsViewPresenterProtocol {
     let tokenStorage: TokenStorageProtocol
 
     var friends: [Profile] = []
-    var contacts: [Contact] = []
+    var contacts: [Contact] = [] {
+        didSet {
+            view?.updateView()
+        }
+    }
 
     // MARK: - Initialiser
     init(coordinator: ContactsFlowCoordinator, friendsService: FriendsServiceProtocol, contactsService: ContactsServiceProtocol ,tokenStorage: TokenStorageProtocol) {

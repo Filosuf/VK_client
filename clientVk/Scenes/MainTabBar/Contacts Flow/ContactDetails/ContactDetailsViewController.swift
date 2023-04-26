@@ -8,13 +8,13 @@
 import UIKit
 import ContactsUI
 
-protocol ContactsDetailsViewControllerProtocol: AnyObject {
+protocol ContactDetailsViewControllerProtocol: AnyObject {
     func setupView(iPhone: Contact?, vkontakte: Profile?)
 }
 
-final class ContactDetailsViewController: UIViewController, ContactsDetailsViewControllerProtocol {
+final class ContactDetailsViewController: UIViewController, ContactDetailsViewControllerProtocol {
     // MARK: - Properties
-    private let presenter: ContactsDetailsViewPresenter
+    private let presenter: ContactDetailsViewPresenterProtocol
     
     private let nameInContacts: UILabel = {
         let label = UILabel()
@@ -63,7 +63,7 @@ final class ContactDetailsViewController: UIViewController, ContactsDetailsViewC
     }()
 
     // MARK: - Initialiser
-    init(presenter: ContactsDetailsViewPresenter) {
+    init(presenter: ContactDetailsViewPresenterProtocol) {
         self.presenter = presenter
         super.init(nibName: nil, bundle: nil)
     }

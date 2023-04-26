@@ -7,15 +7,15 @@
 
 import Foundation
 
-protocol ContactsDetailsViewPresenterProtocol: AnyObject {
+protocol ContactDetailsViewPresenterProtocol: AnyObject {
     func viewDidLoad()
     func updatePhoto()
     func didSelectContact(_ contact: Contact)
 }
 
-final class ContactsDetailsViewPresenter: ContactsDetailsViewPresenterProtocol {
+final class ContactDetailsViewPresenter: ContactDetailsViewPresenterProtocol {
     // MARK: - Properties
-    weak var view: ContactsDetailsViewControllerProtocol?
+    weak var view: ContactDetailsViewControllerProtocol?
 
     let coordinator: ContactsFlowCoordinator
     let contactsService: ContactsServiceProtocol

@@ -30,6 +30,17 @@ final class ProfileViewPresenter: ProfileViewPresenterProtocol {
 
     // MARK: - Methods
     func viewDidLoad() {
+        checkingToken()
+    }
+
+    func logout() {
+        tokenStorage.removeToken()
+        cleanCookie()
+        coordinator.switchToAuthController()
+    }
+
+    // MARK: - Private methods
+    private func checkingToken() {
         if let token = tokenStorage.getToken(), token.isTokenValid {
             profileService.fetchProfile(token.accessToken) { [weak self] result in
                 switch result {
@@ -46,13 +57,6 @@ final class ProfileViewPresenter: ProfileViewPresenterProtocol {
         }
     }
 
-    func logout() {
-        tokenStorage.removeToken()
-        cleanCookie()
-        coordinator.switchToAuthController()
-    }
-
-    // MARK: - Private methods
     private func cleanCookie() {
         // Очищаем все куки из хранилища.
         HTTPCookieStorage.shared.removeCookies(since: Date.distantPast)

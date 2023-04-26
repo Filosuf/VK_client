@@ -45,7 +45,6 @@ final class ContactsViewController: UIViewController, ContactsViewControllerProt
 
     override func viewWillAppear(_ animated: Bool) {
         presenter.viewWillAppear()
-        contactsTableView.reloadData()
     }
 
     // MARK: - Methods
