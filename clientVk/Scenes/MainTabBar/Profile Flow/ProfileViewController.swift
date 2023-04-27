@@ -45,12 +45,13 @@ final class ProfileViewController: UIViewController, ProfileViewControllerProtoc
     }()
 
     private lazy var logOutButton: UIButton = {
-        var config = UIButton.Configuration.bordered()
-        config.title = "logout".localized
-        let button = UIButton(configuration: config, primaryAction: UIAction(handler: { [unowned self] _ in
-            presenter.logout()
-        }))
-
+        let button = UIButton()
+        button.setTitle("logout".localized, for: .normal)
+        button.backgroundColor = .red
+        button.setTitleColor(.white, for: .normal)
+        button.layer.cornerRadius = 34 / 2
+        button.clipsToBounds = true
+        button.addTarget(self, action: #selector(logoutHandle), for: .touchUpInside)
         return button
     }()
 
@@ -82,6 +83,10 @@ final class ProfileViewController: UIViewController, ProfileViewControllerProtoc
         phoneLabel.text = profile.mobilePhone
     }
 
+    @objc private func logoutHandle() {
+        presenter.logout()
+    }
+
     private func layout() {
         [profileImage, nameLabel, cityLabel, phoneLabel,logOutButton].forEach { view in
             view.translatesAutoresizingMaskIntoConstraints = false
@@ -105,7 +110,9 @@ final class ProfileViewController: UIViewController, ProfileViewControllerProtoc
             phoneLabel.trailingAnchor.constraint(equalTo: nameLabel.trailingAnchor),
 
             logOutButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            logOutButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20)
+            logOutButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20),
+            logOutButton.widthAnchor.constraint(equalToConstant: 150),
+            logOutButton.heightAnchor.constraint(equalToConstant: 34),
         ])
     }
 }

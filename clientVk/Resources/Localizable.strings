@@ -10,8 +10,20 @@
 enter = "Войти";
 
 // MARK: - Main TabBar
-profile = "Profile";
-contacts = "Contacts";
+profile = "Профиль";
+contacts = "Контакты";
 // MARK: - Profile flow
 // MARK: - ProfileViewController
 logout = "Выход";
+
+// MARK: - Contacts flow
+// MARK: - ContactsViewController
+listOfFriends = "Список друзей";
+// MARK: - ContactsViewController
+updateContact = "Обновление контакта";
+vkontakte = "Вконтакте";
+contact = "Контакт";
+updatePhotoContact = "Обновить фото для контакта";
+edit = "Изменить";
+add = "Добавить";
+emptyName = "Не удалось\nнайти контакт";

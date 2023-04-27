@@ -14,7 +14,9 @@ final class ContactsTableViewCell: UITableViewCell {
     private let nameInContacts: UILabel = {
         let label = UILabel()
         label.textColor = .label
-//        label.font = UIFont.systemFont(ofSize: 24, weight: .bold)
+        label.minimumScaleFactor = 0.7
+        label.adjustsFontSizeToFitWidth = true
+        label.textAlignment = .right
         return label
     }()
 
@@ -28,7 +30,8 @@ final class ContactsTableViewCell: UITableViewCell {
     private let nameInVkontakte: UILabel = {
         let label = UILabel()
         label.textColor = .label
-//        label.font = UIFont.systemFont(ofSize: 24, weight: .bold)
+        label.minimumScaleFactor = 0.7
+        label.adjustsFontSizeToFitWidth = true
         return label
     }()
 
@@ -39,10 +42,11 @@ final class ContactsTableViewCell: UITableViewCell {
         return image
     }()
 
-    private let goToDetails: UIButton = {
-        let button = UIButton()
-        button.setBackgroundImage(UIImage(systemName: "chevron.right"), for: .normal)
-        button.tintColor = .label
+    private let goToDetails: UILabel = {
+        let button = UILabel()
+        button.text = ">"
+        button.font = UIFont.boldSystemFont(ofSize: 23)
+        button.textColor = .gray
         button.clipsToBounds = true
         return button
     }()
@@ -62,7 +66,7 @@ final class ContactsTableViewCell: UITableViewCell {
         photoInContacts.image = UIImage(named: "noPhoto")
         nameInContacts.text = ""
         if let profile = iPhone {
-            nameInContacts.text = profile.fullName
+            nameInContacts.text = "iPhone: \(profile.fullName)"
             if let photoData = profile.photoData {
                 photoInContacts.image = UIImage(data: photoData)
             }
@@ -83,26 +87,26 @@ final class ContactsTableViewCell: UITableViewCell {
         }
 
         NSLayoutConstraint.activate([
-            photoInContacts.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            photoInContacts.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: basicSpaceInterval),
-            photoInContacts.heightAnchor.constraint(equalToConstant: 50),
-            photoInContacts.widthAnchor.constraint(equalToConstant: 50),
-
-            nameInContacts.leadingAnchor.constraint(equalTo: photoInContacts.trailingAnchor, constant: basicSpaceInterval),
-            nameInContacts.trailingAnchor.constraint(equalTo: photoInVkontakte.leadingAnchor, constant: basicSpaceInterval),
-            nameInContacts.topAnchor.constraint(equalTo: contentView.topAnchor, constant: basicSpaceInterval),
-
-            nameInVkontakte.leadingAnchor.constraint(equalTo: photoInContacts.trailingAnchor, constant: basicSpaceInterval),
-            nameInVkontakte.trailingAnchor.constraint(equalTo: photoInVkontakte.leadingAnchor, constant: basicSpaceInterval),
-            nameInVkontakte.topAnchor.constraint(equalTo: nameInContacts.bottomAnchor, constant: basicSpaceInterval),
-
             photoInVkontakte.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            photoInVkontakte.trailingAnchor.constraint(equalTo: goToDetails.leadingAnchor, constant: -basicSpaceInterval),
+            photoInVkontakte.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: basicSpaceInterval),
             photoInVkontakte.heightAnchor.constraint(equalToConstant: 50),
             photoInVkontakte.widthAnchor.constraint(equalToConstant: 50),
 
+            nameInVkontakte.leadingAnchor.constraint(equalTo: photoInVkontakte.trailingAnchor, constant: basicSpaceInterval),
+            nameInVkontakte.trailingAnchor.constraint(equalTo: photoInContacts.leadingAnchor, constant: -basicSpaceInterval),
+            nameInVkontakte.topAnchor.constraint(equalTo: contentView.topAnchor, constant: basicSpaceInterval),
+
+            nameInContacts.leadingAnchor.constraint(equalTo: photoInVkontakte.trailingAnchor, constant: basicSpaceInterval),
+            nameInContacts.trailingAnchor.constraint(equalTo: photoInContacts.leadingAnchor, constant: -basicSpaceInterval),
+            nameInContacts.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -basicSpaceInterval),
+
+            photoInContacts.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            photoInContacts.trailingAnchor.constraint(equalTo: goToDetails.leadingAnchor, constant: -basicSpaceInterval),
+            photoInContacts.heightAnchor.constraint(equalToConstant: 50),
+            photoInContacts.widthAnchor.constraint(equalToConstant: 50),
+
             goToDetails.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            goToDetails.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -basicSpaceInterval),
+            goToDetails.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             goToDetails.widthAnchor.constraint(equalToConstant: 32),
             goToDetails.heightAnchor.constraint(equalToConstant: 32),
 

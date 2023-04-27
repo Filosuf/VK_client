@@ -72,5 +72,3 @@ final class ContactDetailsViewControllerSpy: UIViewController, ContactDetailsVie
         viewIsSet = true
     }
 }
-
-

@@ -39,6 +39,7 @@ final class ContactsViewController: UIViewController, ContactsViewControllerProt
     // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        title = "listOfFriends".localized
         view.backgroundColor = .systemBackground
         layout()
     }
@@ -87,7 +88,7 @@ extension ContactsViewController: UITableViewDataSource {
 // MARK: - UITableViewDelegate
 extension ContactsViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 100
+        return 70
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
